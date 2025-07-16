@@ -1,0 +1,31 @@
+clc;
+clear all;
+close all;
+hcube = hypercube('jasperRidge2_R198.hdr');
+%Find the number of endmembers in the hyperspectral data by using the NWHFC method.
+rgbImg = colorize(hcube,'Method','RGB','ContrastStretching',true);
+figure
+imshow(rgbImg)
+numEndmembers = countEndmembersHFC(hcube);
+%Estimate the endmember spectra using the N-FINDR method
+endmembers = nfindr(hcube,numEndmembers);
+%Plot the endmember spectra.
+figure
+plot(endmembers)
+title(['Number of Endmembers: ' num2str(numEndmembers)])
+xlabel('Band Number')
+ylabel('Data Values')   
+hcube = hypercube("indian_pines.dat");
+rgbImg = colorize(hcube,'Method','RGB','ContrastStretching',true);
+figure
+imshow(rgbImg)
+numEndmembers = countEndmembersHFC(hcube); %endmembers extraction using HFC method
+
+
+endmembers = nfindr(hcube,numEndmembers);
+
+figure
+plot(endmembers)
+title(['Number of Endmembers: ' num2str(numEndmembers)])
+xlabel('Band Number')
+ylabel('Data Values')   
